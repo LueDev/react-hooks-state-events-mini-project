@@ -1,9 +1,26 @@
 import React from "react";
+import Task from "./Task"
 
-function TaskList() {
+function TaskList({tasks, categories, onTaskDelete}) {
+
+  let renderedTasks; 
+  if(categories.length > 0){
+      if(categories.includes('All')){renderedTasks = tasks}
+      else {renderedTasks = tasks.filter(task => {
+      return categories.includes(task.category)
+         })} 
+  } else {
+    renderedTasks = tasks
+  }
+
+  const tasksToRender = categories.length > 0 ? renderedTasks : tasks
+
+  
   return (
     <div className="tasks">
-      {/* display a list of tasks using Task component */}
+      {tasksToRender.map((task) => {
+        return <Task key={task.text} task={task} onDelete={onTaskDelete}></Task>
+      })}
     </div>
   );
 }
