@@ -4,6 +4,7 @@ import Task from "./Task"
 function TaskList({tasks, categories, onTaskDelete}) {
 
   let renderedTasks; 
+  
   if(categories.length > 0){
       if(categories.includes('All')){renderedTasks = tasks}
       else {renderedTasks = tasks.filter(task => {
@@ -14,12 +15,12 @@ function TaskList({tasks, categories, onTaskDelete}) {
   }
 
   const tasksToRender = categories.length > 0 ? renderedTasks : tasks
-
+  let count = 0
   
   return (
     <div className="tasks">
       {tasksToRender.map((task) => {
-        return <Task key={task.text} task={task} onDelete={onTaskDelete}></Task>
+        return <Task key={`${task}${++count}`} task={task} onDelete={onTaskDelete}></Task>
       })}
     </div>
   );
